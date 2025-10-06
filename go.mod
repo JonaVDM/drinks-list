@@ -1,4 +1,4 @@
-module github.com/jonavdm/pocketbase-template
+module github.com/jonavdm/drinks-list
 
 go 1.25
 

@@ -12,11 +12,11 @@ func init() {
 		// https://github.com/pocketbase/pocketbase/blob/develop/core/settings_model.go
 		// most of the sensible settings have been put here. stuff that require secrets (eg: smtp, s3) should still be done
 		// via the ui.
-		settings.Meta.AppName = "My Cool App"
-		settings.Meta.AppURL = "https://example.com"
+		settings.Meta.AppName = "Drankjes lijst"
+		settings.Meta.AppURL = "https://drankjes.sv-rt.nl"
 		settings.Meta.HideControls = true
-		settings.Meta.SenderName = "Support"
-		settings.Meta.SenderAddress = "support@example.com"
+		settings.Meta.SenderName = "KanCo"
+		settings.Meta.SenderAddress = "kantoor@sv-realtime.nl"
 
 		settings.Backups.Cron = "0 0 * * 0" // once a week on sunday, https://crontab.guru
 		settings.Backups.CronMaxKeep = 3

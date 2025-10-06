@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/jonavdm/pocketbase-template/migrations"
+	_ "github.com/jonavdm/drinks-list/migrations"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/pocketbase/pocketbase/tools/osutils"
