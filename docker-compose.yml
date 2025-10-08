@@ -1,7 +1,10 @@
 services:
   pb:
-    build: .
+    build: 
+      context: .
+      target: build
     ports:
       - 8090:8090
     volumes:
-      - ./pb_data:/pb_data
+      - .:/go/src/app
+    command: "go run main.go serve --http 0.0.0.0:8090"
