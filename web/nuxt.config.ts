@@ -6,14 +6,18 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   ssr: false,
+
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
+
   runtimeConfig: {
     public: {
       pb: 'http://localhost:8090',
     },
   },
+
+  modules: ['@pinia/nuxt'],
 })

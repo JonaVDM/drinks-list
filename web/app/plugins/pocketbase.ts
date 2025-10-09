@@ -4,6 +4,7 @@ import PocketBase, { type AuthRecord } from 'pocketbase';
 export default defineNuxtPlugin(async () => {
   const runtimeConfig = useRuntimeConfig()
   const pb = new PocketBase(runtimeConfig.public.pb);
+  const userStore = useUserStore();
 
   const cookie = useCookie<{
     token: string;
@@ -25,6 +26,9 @@ export default defineNuxtPlugin(async () => {
       token: pb.authStore.token,
       record: pb.authStore.record,
     };
+
+    userStore.authed = pb.authStore.isValid
+    userStore.user = pb.authStore.record
   });
 
   try {

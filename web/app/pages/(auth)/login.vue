@@ -2,6 +2,7 @@
 const pb = usePocketbase()
 const error = ref(false)
 const loading = ref(false)
+const userStore = useUserStore()
 
 const formdata = ref({
   email: '',
@@ -24,6 +25,9 @@ async function login() {
 
 <template>
   <form @submit.prevent="login" class="flex flex-col gap-2 max-w-lg mx-auto py-12">
+    <div v-if="userStore.authed">
+      <pre>{{ JSON.stringify(userStore.user, null, 2) }}</pre>
+    </div>
     <input type="email" placeholder="email" class="input w-full" v-model="formdata.email" />
     <input type="password" placeholder="password" class="input w-full" v-model="formdata.password" />
     <p v-if="error" class="text-error">failed to log in</p>
