@@ -1,11 +1,14 @@
 // plugins/pocketbase.js
-import PocketBase from 'pocketbase';
+import PocketBase, { type AuthRecord } from 'pocketbase';
 
 export default defineNuxtPlugin(async () => {
   const runtimeConfig = useRuntimeConfig()
   const pb = new PocketBase(runtimeConfig.public.pb);
 
-  const cookie = useCookie('pb_auth', {
+  const cookie = useCookie<{
+    token: string;
+    record: AuthRecord
+  }>('pb_auth', {
     path: '/',
     secure: true,
     sameSite: 'strict',
