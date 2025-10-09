@@ -4,13 +4,14 @@ WORKDIR /app
 COPY web/package*.json ./
 RUN npm install
 COPY web/ .
-RUN npm run build
+RUN npm run generate
 
 FROM golang:1.25 AS build
 WORKDIR /go/src/app
 
-COPY . .
+COPY go.* ./
 RUN go mod download
+COPY . . 
 COPY --from=frontend /app/.output web/.output
 RUN CGO_ENABLED=0 go build -o /go/bin/app
 
