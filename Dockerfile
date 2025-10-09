@@ -17,5 +17,6 @@ RUN CGO_ENABLED=0 go build -o /go/bin/app
 
 FROM gcr.io/distroless/static-debian12
 
+ENV NUXT_PUBLIC_PB /
 COPY --from=build /go/bin/app /
 CMD ["/app", "serve", "--http=0.0.0.0:8090"]
