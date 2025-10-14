@@ -1,0 +1,30 @@
+<script lang="ts" setup>
+definePageMeta({
+  layout: 'kiosk',
+});
+
+const pb = usePocketbase();
+const { data, error, status } = useAsyncData(() => pb.collection<Product>('products').getFullList())
+</script>
+
+<template>
+  <div class="alert alert-error" v-if="error">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+
+    <span>Failed to load products, {{ error.message }}</span>
+  </div>
+
+  <div v-if="status == 'pending' || status == 'idle'">Loading</div>
+
+  <div v-else>
+    <div class="flex justify-end">
+      <NuxtLink class="btn btn-primary" to="/kiosk/checkout">Betaal</NuxtLink>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">
+      <ProductCard v-for="product in data" :product></ProductCard>
+    </div>
+  </div>
+</template>
