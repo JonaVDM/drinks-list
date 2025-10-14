@@ -30,4 +30,6 @@ export const useBasketStore = defineStore('basket', () => {
     remove,
     clear,
   }
+}, {
+  persist: true,
 })
