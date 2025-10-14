@@ -1,6 +1,6 @@
-interface Drink {
+interface Product {
   id: string;
-  drink: string;
+  name: string;
   photo: string;
   price: number;
   barcode: string;

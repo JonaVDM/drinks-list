@@ -9,7 +9,7 @@ const userStore = useUserStore()
 const pb = usePocketbase()
 
 const { data, error } = await useAsyncData(() => {
-  return pb.collection('orders').getFullList({ filter: `user.id='${userStore.user?.id}'`, expand: 'drink', sort: '-created' })
+  return pb.collection('orders').getFullList({ filter: `user.id='${userStore.user?.id}'`, sort: '-created' })
 })
 
 const ordersByMonth = computed(() => data.value?.reduce<Record<string, RecordModel[]>>((prev, curr) => {

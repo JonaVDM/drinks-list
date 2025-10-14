@@ -4,7 +4,7 @@ definePageMeta({
 });
 
 const pb = usePocketbase();
-const { data, error, status } = useAsyncData(() => pb.collection<Drink>('drinks').getFullList())
+const { data, error, status } = useAsyncData(() => pb.collection<Product>('products').getFullList())
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const { data, error, status } = useAsyncData(() => pb.collection<Drink>('drinks'
 
       <div v-else>
         <div class="grid md:grid-cols-3 gap-4">
-          <ProductCard v-for="drink in data" :drink></ProductCard>
+          <ProductCard v-for="product in data" :product></ProductCard>
         </div>
       </div>
     </div>
