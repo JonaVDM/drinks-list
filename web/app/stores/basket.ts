@@ -1,5 +1,12 @@
 export const useBasketStore = defineStore('basket', () => {
+  const productsStore = useProductStore()
   const products = ref<Record<string, number>>({})
+
+  const total = computed(() => {
+    return Object.entries(products.value).reduce<number>((prev, [id, amount]) => {
+      return prev + amount * (productsStore.byId[id]?.price ?? 0)
+    }, 0);
+  })
 
   const add = (id: string) => {
     if (!products.value[id]) {
@@ -25,6 +32,8 @@ export const useBasketStore = defineStore('basket', () => {
 
   return {
     products,
+
+    total,
 
     add,
     remove,

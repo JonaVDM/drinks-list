@@ -3,8 +3,7 @@ definePageMeta({
   layout: 'kiosk',
 });
 
-const pb = usePocketbase();
-const { data, error, status } = useAsyncData(() => pb.collection<Product>('products').getFullList())
+const { loading, products, error } = useProductStore()
 </script>
 
 <template>
@@ -17,14 +16,15 @@ const { data, error, status } = useAsyncData(() => pb.collection<Product>('produ
     <span>Failed to load products, {{ error.message }}</span>
   </div>
 
-  <div v-if="status == 'pending' || status == 'idle'">Loading</div>
+  <div v-if="loading">Loading</div>
 
   <div v-else>
     <div class="flex justify-end">
       <NuxtLink class="btn btn-primary" to="/kiosk/checkout">Betaal</NuxtLink>
     </div>
+
     <div class="grid md:grid-cols-3 gap-4">
-      <ProductCard v-for="product in data" :product></ProductCard>
+      <ProductCard v-for="product in products" :product></ProductCard>
     </div>
   </div>
 </template>

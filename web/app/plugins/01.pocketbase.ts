@@ -1,4 +1,3 @@
-// plugins/pocketbase.js
 import PocketBase, { type AuthRecord } from 'pocketbase';
 
 export default defineNuxtPlugin(async () => {
