@@ -1,10 +1,37 @@
 services:
   pb:
-    build: 
+    build:
       context: .
       target: build
     ports:
       - 8090:8090
     volumes:
-      - .:/go/src/app
+      - ./migrations:/go/src/app/migrations
+      - ./pb_data:/go/src/app/pb_data
     command: "go run main.go serve --http 0.0.0.0:8090"
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: /go/src/web
+          initial_sync: true
+          ignore:
+            - web/
+            - migrations/
+            - pb_data/
+
+  web:
+    build:
+      context: .
+      target: frontend
+    ports:
+      - 3000:3000
+    command: "npm run dev -- --host"
+    develop:
+      watch:
+        - action: sync
+          path: web/
+          target: /app
+          initial_sync: true
+          ignore:
+            - web/node_modules/
