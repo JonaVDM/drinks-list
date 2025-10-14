@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jonavdm/drinks-list/hooks"
 	_ "github.com/jonavdm/drinks-list/migrations"
 	"github.com/jonavdm/drinks-list/web"
 	"github.com/pocketbase/pocketbase"
@@ -30,6 +31,8 @@ func main() {
 		TemplateLang: migratecmd.TemplateLangGo,
 		Automigrate:  osutils.IsProbablyGoRun(),
 	})
+
+	hooks.MustRegiser(app, hooks.DrinkHooksConfig{})
 
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
