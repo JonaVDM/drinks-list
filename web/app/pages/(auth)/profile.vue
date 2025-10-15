@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { RecordModel } from 'pocketbase'
-
 definePageMeta({
   middleware: 'auth'
 })
@@ -9,10 +7,10 @@ const userStore = useUserStore()
 const pb = usePocketbase()
 
 const { data, error } = await useAsyncData(() => {
-  return pb.collection('orders').getFullList({ filter: `user.id='${userStore.user?.id}'`, sort: '-created' })
+  return pb.collection<Order>('orders').getFullList({ filter: `user.id='${userStore.user?.id}'`, sort: '-created', expand: 'rows' })
 })
 
-const ordersByMonth = computed(() => data.value?.reduce<Record<string, RecordModel[]>>((prev, curr) => {
+const ordersByMonth = computed(() => data.value?.reduce<Record<string, Order[]>>((prev, curr) => {
   const [year, month] = curr.created.split('-');
   const key = `${year}-${month}`;
   if (!prev[key]) {
@@ -25,25 +23,17 @@ const ordersByMonth = computed(() => data.value?.reduce<Record<string, RecordMod
 
 <template>
   <div v-if="error" class="alert alert-error">Something went wrong fetching data</div>
-  <div v-for="(orders, month) in ordersByMonth" class="overflow-x-auto">
+  <div v-for="(orders, month) in ordersByMonth">
     <h2 class="text-xl">{{ month }}</h2>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Drink</th>
-          <th>Cost</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr v-for="order in orders">
-          <td>{{ new Date(order.created).toLocaleString() }}</td>
-          <td>{{ order.expand?.drink.drink }}</td>
-          <td>{{ order.expand?.drink.price }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="flex flex-col gap-4">
+      <div v-for="order in orders">
+        <h3 class="text-lg font-thin">{{ new Date(order.created).toLocaleString() }}</h3>
+        <TotalTable :total="order.total" :products="order.expand.rows.reduce<Record<string, number>>((prev, curr) => {
+          prev[curr.product] = curr.amount
+          return prev
+        }, {})"></TotalTable>
+      </div>
+    </div>
   </div>
 </template>
