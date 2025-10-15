@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import type { RecordModel } from 'pocketbase';
+
 definePageMeta({
   layout: 'kiosk',
 })
 
 const basketStore = useBasketStore()
 const productStore = useProductStore()
+
+const user = ref<RecordModel>();
 </script>
 
 <template>
@@ -26,6 +30,10 @@ const productStore = useProductStore()
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="py-10 md:grid grid-cols-2 gap-5">
+      <UserSelect v-model="user" />
     </div>
   </div>
 </template>
