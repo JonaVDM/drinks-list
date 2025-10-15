@@ -30,6 +30,12 @@ export const useBasketStore = defineStore('basket', () => {
     products.value = {};
   }
 
+  const itemCount = () => {
+    return Object.entries(products.value).reduce<number>((total, [_, amount]) => {
+      return total + amount
+    }, 0)
+  }
+
   return {
     products,
 
@@ -38,6 +44,7 @@ export const useBasketStore = defineStore('basket', () => {
     add,
     remove,
     clear,
+    itemCount,
   }
 }, {
   persist: true,
