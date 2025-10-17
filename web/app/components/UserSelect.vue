@@ -19,6 +19,12 @@ async function loadUsers() {
   users.value = data
 }
 
+function onButtonClick(user: RecordModel) {
+  emit('update:modelValue', user)
+  filter.value = ''
+  users.value = []
+}
+
 onMounted(loadUsers)
 </script>
 
@@ -33,7 +39,7 @@ onMounted(loadUsers)
 
     <template v-for="user in users">
       <UserCard :user v-if="user.id != modelValue?.id">
-        <button class="btn btn-secondary" @click="emit('update:modelValue', user)">Selecteer</button>
+        <button class="btn btn-secondary" @click="onButtonClick(user)">Selecteer</button>
       </UserCard>
     </template>
   </div>

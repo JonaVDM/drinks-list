@@ -4,7 +4,6 @@ import type { RecordModel } from 'pocketbase';
 const emit = defineEmits(['submit'])
 
 const basketStore = useBasketStore()
-const router = useRouter()
 
 const loading = ref(false)
 const error = ref<string>()
@@ -33,7 +32,8 @@ async function pay() {
       method: 'POST',
     })
     basketStore.clear()
-    router.push('/kiosk')
+    user.value = undefined
+    emit('submit')
   } catch (e) {
     error.value = 'Error!!!!!!!!!!'
   } finally {
