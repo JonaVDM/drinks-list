@@ -23,14 +23,12 @@ const price = computed(() => {
       <h3 class="card-title">{{ product.name }}</h3>
 
       <p>{{ price }}</p>
-      <div class="card-actions justify-center">
-        <div class="flex gap-2 items-center">
-          <button class="btn btn-primary" @click="basketStore.remove(product.id)">-</button>
-          <p>
-            {{ basketStore.products[product.id] }}
-          </p>
-          <button class="btn btn-primary" @click="basketStore.add(product.id)">+</button>
-        </div>
+      <div class="grid grid-cols-3">
+        <button class="btn btn-primary" @click="basketStore.remove(product.id)">-</button>
+        <p class="text-center self-center">
+          {{ basketStore.products[product.id] }}
+        </p>
+        <button class="btn btn-primary" @click="basketStore.add(product.id)">+</button>
       </div>
     </div>
   </div>

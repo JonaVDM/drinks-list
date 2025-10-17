@@ -12,7 +12,7 @@ defineProps<{ user: RecordModel }>()
           <span class="text-lg">{{ user.name[0] }}</span>
         </div>
       </div>
-      <p class="text-xl font-thin">{{ user.name }}</p>
+      <p class="font-thin">{{ user.name }}</p>
     </div>
 
     <slot />

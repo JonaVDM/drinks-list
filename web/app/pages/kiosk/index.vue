@@ -16,15 +16,20 @@ const { loading, products, error } = useProductStore()
     <span>Failed to load products, {{ error.message }}</span>
   </div>
 
+
   <div v-if="loading">Loading</div>
 
   <div v-else>
-    <div class="flex justify-end">
-      <NuxtLink class="btn btn-primary" to="/kiosk/checkout">Betaal</NuxtLink>
-    </div>
+    <NuxtLink to="/kiosk/checkout" class="md:hidden my-2 btn btn-primary w-full btn-xl">Betaal</NuxtLink>
 
-    <div class="grid md:grid-cols-3 gap-4">
-      <ProductCard v-for="product in products" :product></ProductCard>
+    <div class="md:flex items-start">
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <ProductCard v-for="product in products" :product></ProductCard>
+      </div>
+
+      <div class="flex-1/3 md:flex-2/3 px-3 max-md:hidden">
+        <CheckoutPanel />
+      </div>
     </div>
   </div>
 </template>
